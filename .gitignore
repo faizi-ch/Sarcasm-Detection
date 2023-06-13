@@ -1,5 +1,11 @@
 data/*
 !data/README.md
 .DS_Store
+
 glove.6B.50d.txt
 glove.6B.100d.txt
+
+X_train_bert.pt
+train_attention_mask.pt
+X_test_bert.pt
+test_attention_mask.pt
