@@ -9,3 +9,5 @@ X_train_bert.pt
 train_attention_mask.pt
 X_test_bert.pt
 test_attention_mask.pt
+
+bert_model.pt
