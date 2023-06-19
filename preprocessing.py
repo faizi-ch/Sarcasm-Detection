@@ -176,16 +176,17 @@ def preprocess(text):
     text = _remove_mentions(text)
     text = _remove_multiple_spaces(text)
 
-    # text = _lowercase(text)
+    text = _lowercase(text)
     text = _expand_contractions(text)
     text = _separate_punctuations(text)
     text = _remove_punctuation(text)
+    # text = _remove_punctuation_all(text)
     # text = _remove_numbers(text)
 
-    text_tokens = _tokenize(text)
-    text_tokens = _stopword_filtering(text_tokens)
+    # text_tokens = _tokenize(text)
+    # text_tokens = _stopword_filtering(text_tokens)
     # text_tokens = _stemming(text_tokens)
-    text = _stitch_text_tokens_together(text_tokens)
+    # text = _stitch_text_tokens_together(text_tokens)
 
     return text.strip()  # also remove leading and trailing spaces
 
@@ -252,6 +253,15 @@ def _separate_punctuations(text):
 
 
 def _remove_punctuation(text):
+    punctuation_to_keep = "?\\!"  # keep these punctuations '?', '\', '!'
+    return "".join(
+        character
+        for character in text
+        if character not in string.punctuation or character in punctuation_to_keep
+    )
+
+
+def _remove_punctuation_all(text):
     return "".join(
         character for character in text if character not in string.punctuation
     )
