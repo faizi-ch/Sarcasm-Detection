@@ -1,4 +1,7 @@
 data/*
+__pycache__/
+lightning_logs/
+trained_weights/
 !data/README.md
 .DS_Store
 
@@ -12,3 +15,5 @@ test_attention_mask.pt
 
 bert_model.pt
 bert_model_5_epochs.pt
+
+preprocessed_dataset.pkl
