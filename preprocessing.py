@@ -169,7 +169,7 @@ mispell_dict = {
 mispell_dict = {k.lower(): v.lower() for k, v in mispell_dict.items()}
 
 
-def preprocess(text):
+def preprocess(text, polarity=None, subjectivity=None):
     text = _remove_amp(text)
     text = _remove_links(text)
     text = _remove_hashes(text)
@@ -189,6 +189,8 @@ def preprocess(text):
 
     text = _remove_multiple_spaces(text)
     text = _remove_leading_trailing_spaces(text)
+    if polarity is not None and subjectivity is not None:
+        text = _add_sentiment_tokens(text, polarity, subjectivity)
     text = _add_special_tokens(text)
 
     return text
@@ -275,4 +277,8 @@ def _remove_leading_trailing_spaces(text):
 
 
 def _add_special_tokens(text):
-    return "[CLS] " + text + " [SEP]"
+    return "<s>" + text + "</s>"
+
+
+def _add_sentiment_tokens(text, polarity, subjectivity):
+    return text + " [SEP] " + str(polarity) + " [SEP] " + str(subjectivity)

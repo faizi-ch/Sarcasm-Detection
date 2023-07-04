@@ -9,10 +9,11 @@ import argparse
 
 import pytorch_lightning as pl
 import torch
+import wandb
 from data_module import SarcasmDetectionDataModule, SARCDataset
 from model import SarcasmDetectionModel
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
-from pytorch_lightning.loggers import TensorBoardLogger
+from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
 
 # Set a random seed for reproducibility
 pl.seed_everything(42, workers=True)
@@ -41,7 +42,15 @@ data_module = SarcasmDetectionDataModule(
     mode=args.mode,
 )
 
-logger = TensorBoardLogger(save_dir="lightning_logs")
+# logger = TensorBoardLogger(save_dir="lightning_logs")
+
+wandb.login()
+wandb_logger = WandbLogger()
+wandb_logger = WandbLogger(
+    name="RoBERTa-max_length-50-special-tokens",
+    project="Sarcasm-Detection",
+    log_model=True,
+)
 
 checkpoint_callback = ModelCheckpoint(
     dirpath="trained_weights",
@@ -69,9 +78,7 @@ trainer = pl.Trainer(
     devices=len(gpu_ids),
     strategy=strategy,
     max_epochs=num_epochs,
-    logger=logger,
-    # gradient_clip_val=0.1,
-    # log_every_n_steps=7,
+    logger=wandb_logger,
     callbacks=[checkpoint_callback, early_stopping_callback],
 )
 

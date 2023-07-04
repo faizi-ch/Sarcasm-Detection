@@ -7,14 +7,9 @@ random_state = 42
 
 data_file = "data/train-balanced-sarcasm.csv"
 
-test_size = 0.25
+TRAIN_SIZE = 0.75
 
-
-num_classes = 4  # Number of classes including background
-num_labels = 3  # Number of classes excluding background
 learning_rate = 1e-5
-lr_backbone = 1e-5
-weight_decay = 1e-4
 num_epochs = 10
 batch_size = 128
 num_workers = 80  # Number of workers for the dataloaders
@@ -24,3 +19,6 @@ threshold = (
 )
 
 EARLY_STOPPING = 3
+
+
+use_sentiment_context = True
